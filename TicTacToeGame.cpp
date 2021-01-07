@@ -8,6 +8,7 @@ TicTacToeGame::TicTacToeGame() {
     initialize();
 }
 
+// Create the board with indexes
 void TicTacToeGame::initialize() {
     currentPlayer = 2;
     int k = 0;
@@ -19,6 +20,7 @@ void TicTacToeGame::initialize() {
     }
 }
 
+// Prints the board int he format of a TicTacToe game
 void TicTacToeGame::printBoard() {
     std::cout << "\n";
     for (int i = 0; i < 3; i++) {
@@ -35,6 +37,7 @@ void TicTacToeGame::printBoard() {
  * need to do input validation for:
  *     - playing position (checking for string)
  */
+// Handles the playing
 void TicTacToeGame::play() {
     std::string welcome = "\t\t*********************************************\n\t\t*\t\tWelcome to the TicTacToe game !\t\t*\n\t\t*********************************************\n\n\n";
     std::string position = "-1";
@@ -43,6 +46,7 @@ void TicTacToeGame::play() {
 
     std::cout << welcome;
 
+    // Initializing players
     std::cout << "Player 1, please type in your name: ";
     std::cin >> player1_name;
     setPlayer1Name(player1_name);
@@ -56,30 +60,38 @@ void TicTacToeGame::play() {
 
     std::cout << "Starting game: \nINSTRUCTIONS: Select the number of the position where you want to play" << std::endl;
 
+    // Play loop
     while (!hasWon()) {
         printBoard();
 
+        // Alternate between players after evey move
         switchCurrentPlayer();
 
         while (true) {
             std::cin >> position;
 
-            /// Implement checking for string too
+            /** Implement checking for string too
+             *
+             */
+
+            // Validation if the position is in range, request for another input if not
             while (true) {
                 if (stoi(position) < 0 || stoi(position) > 9) {
                     std::cout << position << " is an invalid position ! Enter a position between 0 and 9 inclusive: ";
                     std::cin >> position;
                 } else if (stoi(position) >= 0 || stoi(position) < 9) break;
             }
+
+            // Check if there's not X or O in that position already, asks for another position to if so. If not writes X/O
             if (checkMarker(getRow(stoi(position)), getColumn(stoi(position)))) {
                 setMarker(stoi(position), stoi(position));
                 break;
             } else {
-                std::cout
-                        << "There's already an X/O in that position. Try place it in an empty spot.\nEnter a new position: ";
+                std::cout << "There's already an X/O in that position. Try place it in an empty spot.\nEnter a new position: ";
             }
         }
 
+        // Checks for a tie after every move by checking if the max number of moves have been made
         if (haveTied(moveCount)) {
             std::cout << "\n\nTie game !";
 
@@ -97,12 +109,14 @@ void TicTacToeGame::play() {
             }
         }
 
+        // Checks for a winner after every move
         if (hasWon()) {
             std::cout << winMessage();
 
             std::cout << "\n\nDo you want to play again ? Enter y OR n: ";
             std::cin >> playAgain;
 
+            // If there's a winner ask if user wants to play another game, stops application if not
             while (true) {
                 if (playAgain != 'y' || playAgain != 'n') {
                     std::cout << "Invalid expression ! Enter either y OR n: ";
@@ -129,6 +143,7 @@ std::string TicTacToeGame::winMessage() {
     else if (getCurrentPlayer() == 2) return "\n\n" + getPlayer2Name() + "has won !";
 }
 
+// Checks for winning conditions
 bool TicTacToeGame::hasWon() const {
     for (int i = 0; i < 3; ++i) {
         // Checking horizontals
@@ -151,7 +166,6 @@ bool TicTacToeGame::hasWon() const {
     // If no alignment
     return false;
 }
-
 
 void TicTacToeGame::setPlayer1Name(std::string name) {
     player1_name = name;
