@@ -1,7 +1,3 @@
-//
-// Created by Isaac Muriuki on 2021-01-06.
-//
-
 #ifndef TICTACTOE_TICTACTOEGAME_H
 #define TICTACTOE_TICTACTOEGAME_H
 
