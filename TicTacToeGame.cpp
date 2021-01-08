@@ -33,10 +33,6 @@ void TicTacToeGame::printBoard() {
     //cout << "\n-------------------------\n";
 }
 
-/*
- * need to do input validation for:
- *     - playing position (checking for string)
- */
 // Handles the playing
 void TicTacToeGame::play() {
     std::string welcome = "\t\t*********************************************\n\t\t*\t\tWelcome to the TicTacToe game !\t\t*\n\t\t*********************************************\n\n\n";
