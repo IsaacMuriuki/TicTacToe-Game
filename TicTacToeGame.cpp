@@ -90,51 +90,35 @@ void TicTacToeGame::play() {
                 std::cout << "There's already an X/O in that position. Try place it in an empty spot.\nEnter a new position: ";
             }
         }
+        moveCount++;
 
-        // Checks for a tie after every move by checking if the max number of moves have been made
-        if (haveTied(moveCount)) {
-            std::cout << "\n\nTie game !";
+        // Checks for a winner or a tie after every move
+        if (hasWon() || haveTied(moveCount)) {
+            std::cout << winMessage();
 
-            std::cout << "\n\nDo you want to play again ? (y/n)): ";
+            std::cout << "\n\nDo you want to play again ? Enter y OR n: ";
             std::cin >> playAgain;
+            playAgain = tolower(playAgain); // converts to lowercase
+
+            // If there's a winner ask if user wants to play another game, stops application if not
+            while (true) {
+                if (playAgain != 'y' && playAgain != 'n') {
+                    std::cout << playAgain << std::endl;
+                    std::cout << "Invalid expression ! Enter either y OR n: ";
+                    std::cin >> playAgain;
+                    playAgain = tolower(playAgain); // converts to lowercase
+                } else if (playAgain == 'y' || playAgain == 'n') break;
+            }
 
             if (playAgain == 'y') {
                 std::cout << "Generating a new board " << std::endl;
                 init();
                 moveCount = 0;
-
             } else if (playAgain == 'n') {
                 std::cout << "\nThank you for playing the TicTacToe game !\nExiting the game.";
                 break;
             }
         }
-
-        // Checks for a winner after every move
-        if (hasWon()) {
-            std::cout << winMessage();
-
-            std::cout << "\n\nDo you want to play again ? Enter y OR n: ";
-            std::cin >> playAgain;
-
-            // If there's a winner ask if user wants to play another game, stops application if not
-            while (true) {
-                if (playAgain != 'y' || playAgain != 'n') {
-                    std::cout << "Invalid expression ! Enter either y OR n: ";
-                    std::cin >> playAgain;
-                } else if (playAgain == 'y' || playAgain == 'n') break;
-            }
-
-            if (playAgain == 'y') {
-                init();
-                moveCount = 0;
-            } else if (playAgain == 'n') {
-                std::cout << "Thank you for playing the TicTacToe game !";
-                break;
-            }
-
-        }
-
-        moveCount++;
     }
 }
 
