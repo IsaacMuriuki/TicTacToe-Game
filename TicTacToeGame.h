@@ -7,9 +7,10 @@
 class TicTacToeGame {
 public:
     TicTacToeGame();
+    void play();
+private:
     void init();
     void printBoard();
-    void play();
     void setPlayer1Name(std::string);
     void setPlayer2Name(std::string);
     std::string getPlayer1Name() const;
@@ -26,7 +27,6 @@ public:
     bool haveTied(int) const;
     const char PLAYER1 = 'X';
     const char PLAYER2 = 'O';
-private:
     char board[3][3];
     std::string player1_name;
     std::string player2_name;

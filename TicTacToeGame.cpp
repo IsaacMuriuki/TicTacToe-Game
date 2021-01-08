@@ -40,7 +40,7 @@ void TicTacToeGame::printBoard() {
 // Handles the playing
 void TicTacToeGame::play() {
     std::string welcome = "\t\t*********************************************\n\t\t*\t\tWelcome to the TicTacToe game !\t\t*\n\t\t*********************************************\n\n\n";
-    std::string position = "-1";
+    int position = -1;
     char playAgain;
     int moveCount = 0;
 
@@ -49,6 +49,7 @@ void TicTacToeGame::play() {
     // Initializing players
     std::cout << "Player 1, please type in your name: ";
     std::cin >> player1_name;
+
     setPlayer1Name(player1_name);
     std::cout << getPlayer1Name() << " will be X." << std::endl;
 
@@ -70,24 +71,27 @@ void TicTacToeGame::play() {
         while (true) {
             std::cin >> position;
 
-            /** Implement checking for string too
-             *
-             */
+            // Checks if input is an integer, asks for another input is not
+            while (std::cin.fail()) {
+                std::cout << "Invalid entry ! Enter a number between 0 and 8 inclusive: ";
+                std::cin.clear();
+                std::cin.ignore(256,'\n');
+                std::cin >> position;
+            }
 
             // Validation if the position is in range, request for another input if not
-            while (true) {
-                if (stoi(position) < 0 || stoi(position) > 9) {
-                    std::cout << position << " is an invalid position ! Enter a position between 0 and 9 inclusive: ";
-                    std::cin >> position;
-                } else if (stoi(position) >= 0 || stoi(position) < 9) break;
+            while (position < 0 || position > 9) {
+                std::cout << position << " is an invalid position ! Enter a position between 0 and 8 inclusive: ";
+                std::cin >> position;
             }
 
             // Check if there's not X or O in that position already, asks for another position to if so. If not writes X/O
-            if (checkMarker(getRow(stoi(position)), getColumn(stoi(position)))) {
-                setMarker(stoi(position), stoi(position));
+            if (checkMarker(getRow(position), getColumn(position))) {
+                setMarker(position, position);
                 break;
             } else {
-                std::cout << "There's already an X/O in that position. Try place it in an empty spot.\nEnter a new position: ";
+                std::cout
+                        << "There's already an X/O in that position. Try place it in an empty spot.\nEnter a new position: ";
             }
         }
         moveCount++;
