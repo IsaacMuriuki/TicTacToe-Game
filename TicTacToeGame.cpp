@@ -5,11 +5,11 @@
 #include "TicTacToeGame.h"
 
 TicTacToeGame::TicTacToeGame() {
-    initialize();
+    init();
 }
 
 // Create the board with indexes
-void TicTacToeGame::initialize() {
+void TicTacToeGame::init() {
     currentPlayer = 2;
     int k = 0;
     for (int i = 0; i < 3; i++) {
@@ -100,7 +100,7 @@ void TicTacToeGame::play() {
 
             if (playAgain == 'y') {
                 std::cout << "Generating a new board " << std::endl;
-                initialize();
+                init();
                 moveCount = 0;
 
             } else if (playAgain == 'n') {
@@ -125,7 +125,7 @@ void TicTacToeGame::play() {
             }
 
             if (playAgain == 'y') {
-                initialize();
+                init();
                 moveCount = 0;
             } else if (playAgain == 'n') {
                 std::cout << "Thank you for playing the TicTacToe game !";

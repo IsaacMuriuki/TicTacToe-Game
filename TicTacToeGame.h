@@ -7,7 +7,7 @@
 class TicTacToeGame {
 public:
     TicTacToeGame();
-    void initialize();
+    void init();
     void printBoard();
     void play();
     void setPlayer1Name(std::string);
