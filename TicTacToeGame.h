@@ -3,8 +3,15 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
+
 
 class TicTacToeGame {
+    struct move{
+        int score;
+        int index;
+    };
+
 public:
     const int PLAYER1_INDEX = 1;
     const int PLAYER2_INDEX = 2;
@@ -16,7 +23,9 @@ public:
     bool haveTied() const;
     char getMarker(int, int) const;
     void setMarker(int, int);
+    void resetMarker(int);
     int getCurrentPlayer() const;
+    std::vector<int> possibleMoves();
 
 private:
     char board[3][3];
@@ -25,8 +34,6 @@ private:
     int currentPlayer;
     bool isMultiplayer;
     int moveCount = 0;
-    const char PLAYER1 = 'X';
-    const char PLAYER2 = 'O';
 
     void init();
     void printBoard();
@@ -36,9 +43,12 @@ private:
     std::string getPlayer2Name() const;
     void switchCurrentPlayer();
     std::string winMessage();
-    int getRow(int) ;
+    int getRow(int) const;
     int getColumn(int) const;
     bool checkMarker(int, int);
+
+    void makeAIMove(TicTacToeGame *);
+    move miniMax(TicTacToeGame, int);
 };
 
 

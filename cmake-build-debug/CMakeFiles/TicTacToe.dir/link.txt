@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/c++  -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/TicTacToe.dir/main.cpp.o CMakeFiles/TicTacToe.dir/TicTacToeGame.cpp.o CMakeFiles/TicTacToe.dir/AI.cpp.o  -o TicTacToe 
+/Library/Developer/CommandLineTools/usr/bin/c++  -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/TicTacToe.dir/main.cpp.o CMakeFiles/TicTacToe.dir/TicTacToeGame.cpp.o  -o TicTacToe 

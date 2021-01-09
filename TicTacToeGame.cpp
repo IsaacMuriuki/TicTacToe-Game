@@ -1,8 +1,67 @@
-//
-// Created by Isaac Muriuki on 2021-01-06.
-//
-
 #include "TicTacToeGame.h"
+
+// Player is MINIMIZER, AI is MAXIMIZER
+TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player) {
+    move current, best;
+    int otherPlayer = (player == 1) ? 3 : 1;
+
+    if (board.hasWon()){
+        if(player == PLAYER1_INDEX){
+            best.score = (board.possibleMoves().size() + 1);
+            return best;
+        } else if(player == AI_INDEX){
+            best.score = -(board.possibleMoves().size() + 1);
+            return best;
+        }
+    } else if(board.haveTied()){
+        best.score = 0;
+        return best;
+    }
+
+    if(player == AI_INDEX){
+        best.score = -9999999;
+    } else best.score = 9999999;
+
+    std::vector<int> possibleMoves = board.possibleMoves();
+
+    for (int i = 0; i < possibleMoves.size(); i++) {
+        board.setMarker(possibleMoves[i], player);
+        current = miniMax(board, otherPlayer);
+        current.index = possibleMoves[i];
+
+        if(player == AI_INDEX){
+            if(current.score > best.score) {
+                best = current;
+            }
+        } else
+            if(current.score < best.score){
+                best = current;
+            }
+
+        board.resetMarker(possibleMoves[i]);
+    }
+
+    //std::cout << "best index: " << best.index << " best score: " << best.score << std::endl;
+    return best;
+}
+
+void TicTacToeGame::makeAIMove(TicTacToeGame *board) {
+    int move = miniMax(*board, getCurrentPlayer()).index;
+    setMarker(move, getCurrentPlayer());
+    std::cout << "\nThe AI has moved to " << move << std::endl;
+}
+
+std::vector<int> TicTacToeGame::possibleMoves() {
+    std::vector<int> possibleMoves;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if(board[i][j] != 'X' && board[i][j] != 'O'){
+                possibleMoves.push_back(3 * i +j);
+            }
+        }
+    }
+    return possibleMoves;
+}
 
 TicTacToeGame::TicTacToeGame() {
     init();
@@ -109,17 +168,8 @@ void TicTacToeGame::play() {
                 std::cin >> position;
 
                 // Checks if input is an integer, asks for another input if not
-                while (std::cin.fail()) {
+                while (std::cin.fail() || position < 0 || position > 8) {
                     std::cout << "Invalid entry ! Enter a number between 0 and 8 inclusive: ";
-                    std::cin.clear();
-                    std::cin.ignore(256, '\n');
-                    std::cin >> position;
-
-                }
-
-                // Validation if the position is in range, request for another input if not
-                while (position < 0 || position > 9) {
-                    std::cout << position << " is an invalid position ! Enter a position between 0 and 8 inclusive: ";
                     std::cin.clear();
                     std::cin.ignore(256, '\n');
                     std::cin >> position;
@@ -127,7 +177,7 @@ void TicTacToeGame::play() {
 
                 // Check if there's an X or O in that position already, if yes - ask for another position to if so. If no - writes X/O
                 if (checkMarker(getRow(position), getColumn(position))) {
-                    setMarker(position, position);
+                    setMarker(position, getCurrentPlayer());
                     break;
                 } else {
                     std::cout
@@ -137,7 +187,7 @@ void TicTacToeGame::play() {
         }
         // AI's move
         else if (currentPlayer == AI_INDEX){
-
+            makeAIMove(this);
         }
 
         moveCount++;
@@ -176,6 +226,7 @@ void TicTacToeGame::play() {
 std::string TicTacToeGame::winMessage() {
     if (getCurrentPlayer() == 1) { return "\n\n" + getPlayer1Name() + " has won !"; }
     else if (getCurrentPlayer() == 2) return "\n\n" + getPlayer2Name() + "has won !";
+    else return "\n\nThe AI has won !";
 }
 
 // Checks for winning conditions
@@ -222,7 +273,7 @@ int TicTacToeGame::getCurrentPlayer() const {
     return currentPlayer;
 }
 
-int TicTacToeGame::getRow(int row) {
+int TicTacToeGame::getRow(int row) const{
     return row / 3;
 }
 
@@ -239,8 +290,8 @@ char TicTacToeGame::getMarker(int row, int column) const {
     return board[row][column];
 }
 
-void TicTacToeGame::setMarker(int row, int column) {
-    board[getRow(row)][getColumn(column)] = currentPlayer == 1 ? PLAYER1 : PLAYER2;
+void TicTacToeGame::setMarker(int position, int player) {
+    board[getRow(position)][getColumn(position)] = player == 1 ? 'X' : 'O';
 }
 
 /* Switches the play either from:
@@ -265,6 +316,10 @@ void TicTacToeGame::switchCurrentPlayer() {
 bool TicTacToeGame::haveTied() const {
     if (moveCount == 9) return true;
     return false;
+}
+
+void TicTacToeGame::resetMarker(int position) {
+    board[getRow(position)][getColumn(position)] = (char) position;
 }
 
 

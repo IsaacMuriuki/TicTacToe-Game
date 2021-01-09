@@ -80,12 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/isaacmuriuki/CLionProjects/TicTacToe/AI.cpp">
-			<Option target="TicTacToe"/>
-		</Unit>
-		<Unit filename="/Users/isaacmuriuki/CLionProjects/TicTacToe/AI.h">
-			<Option target="TicTacToe"/>
-		</Unit>
 		<Unit filename="/Users/isaacmuriuki/CLionProjects/TicTacToe/TicTacToeGame.cpp">
 			<Option target="TicTacToe"/>
 		</Unit>
