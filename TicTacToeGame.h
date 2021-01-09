@@ -48,7 +48,7 @@ private:
     bool checkMarker(int, int);
 
     void makeAIMove(TicTacToeGame *);
-    move miniMax(TicTacToeGame, int);
+    move miniMax(TicTacToeGame, int, int, int);
 };
 
 
