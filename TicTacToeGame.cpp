@@ -3,7 +3,7 @@
 // Player is MINIMIZER, AI is MAXIMIZER
 TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player) {
     move current, best;
-    int otherPlayer = (player == 1) ? 3 : 1;
+    int otherPlayer = (player == PLAYER1_INDEX) ? AI_INDEX : PLAYER1_INDEX;
 
     if (board.hasWon()){
         if(player == PLAYER1_INDEX){
@@ -19,8 +19,8 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player) {
     }
 
     if(player == AI_INDEX){
-        best.score = -9999999;
-    } else best.score = 9999999;
+        best.score = -1000;
+    } else best.score = 1000;
 
     std::vector<int> possibleMoves = board.possibleMoves();
 
@@ -33,15 +33,14 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player) {
             if(current.score > best.score) {
                 best = current;
             }
-        } else
-            if(current.score < best.score){
+        } else if(current.score < best.score){
                 best = current;
             }
 
         board.resetMarker(possibleMoves[i]);
     }
 
-    //std::cout << "best index: " << best.index << " best score: " << best.score << std::endl;
+    std::cout << "best index: " << best.index << " best score: " << best.score << std::endl;
     return best;
 }
 
