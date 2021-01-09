@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-
+#include <limits>
 
 class TicTacToeGame {
     struct move{
@@ -48,7 +48,7 @@ private:
     bool checkMarker(int, int);
 
     void makeAIMove(TicTacToeGame *);
-    move miniMax(TicTacToeGame, int, int, int);
+    move miniMax(TicTacToeGame, int, int, int, int);
 };
 
 

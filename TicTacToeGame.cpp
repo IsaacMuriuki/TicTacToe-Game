@@ -1,16 +1,16 @@
 #include "TicTacToeGame.h"
 
 // Player is MINIMIZER, AI is MAXIMIZER
-TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int alpha, int beta) {
+TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int depth, int alpha, int beta) {
     move current, best;
     int otherPlayer = (player == PLAYER1_INDEX) ? AI_INDEX : PLAYER1_INDEX;
 
     if (board.hasWon()){
         if(player == PLAYER1_INDEX){
-            best.score = (board.possibleMoves().size() + 1);
+            best.score = 1000;
             return best;
         } else if(player == AI_INDEX){
-            best.score = -(board.possibleMoves().size() + 1);
+            best.score = -1000;
             return best;
         }
     } else if(board.haveTied()){
@@ -19,19 +19,20 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int 
     }
 
     if(player == AI_INDEX){
-        best.score = -1000;
-    } else best.score = 1000;
+        best.score = std::numeric_limits<int>::min();
+    } else best.score = std::numeric_limits<int>::max();
 
     std::vector<int> possibleMoves = board.possibleMoves();
 
-    for (int i = 0; i < possibleMoves.size(); i++) {
-        board.setMarker(possibleMoves[i], player);
-        current = miniMax(board, otherPlayer, alpha, beta);
-        current.index = possibleMoves[i];
+    for (int possibleMove : possibleMoves) {
+        board.setMarker(possibleMove, player);
+        current = miniMax(board, otherPlayer, depth + 1, alpha, beta);
+        current.index = possibleMove;
 
         if(player == AI_INDEX){
             if(current.score > best.score) {
-                best = current;
+                best.index = current.index;
+                best.score = current.score - depth * 10;
             }
 
             if(best.score > alpha){
@@ -42,7 +43,8 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int 
             }
         } else { // for the other player
             if (current.score < best.score) {
-                best = current;
+                best.index = current.index;
+                best.score = current.score + depth * 10;
             }
             if(best.score < beta){
                 beta = best.score;
@@ -52,7 +54,7 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int 
             if(beta < alpha) break;
         }
 
-        board.resetMarker(possibleMoves[i]);
+        board.resetMarker(possibleMove);
     }
 
     std::cout << "best index: " << best.index << " best score: " << best.score << std::endl;
@@ -60,7 +62,7 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int 
 }
 
 void TicTacToeGame::makeAIMove(TicTacToeGame *board) {
-    int move = miniMax(*board, getCurrentPlayer(), -1000, 1000).index;
+    int move = miniMax(*board, getCurrentPlayer(), 0,  -1000, 1000).index;
     setMarker(move, getCurrentPlayer());
     std::cout << "\nThe AI has moved to " << move << std::endl;
 }
