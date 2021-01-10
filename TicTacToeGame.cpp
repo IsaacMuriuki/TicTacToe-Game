@@ -57,7 +57,7 @@ TicTacToeGame::move TicTacToeGame::miniMax(TicTacToeGame board, int player, int 
         board.resetMarker(possibleMove);
     }
 
-    std::cout << "best index: " << best.index << " best score: " << best.score << std::endl;
+    // std::cout << "best index: " << best.index << " best score: " << best.score << std::endl;
     return best;
 }
 
@@ -176,7 +176,7 @@ void TicTacToeGame::play() {
 
         // Alternate between players after evey move
         switchCurrentPlayer();
-        std::cout << "\ncurrent player is " << currentPlayer << std::endl;
+        //std::cout << "\ncurrent player is " << currentPlayer << std::endl;
 
         // Player's move
         if (currentPlayer == PLAYER1_INDEX || currentPlayer == PLAYER2_INDEX){
