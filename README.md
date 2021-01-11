@@ -7,3 +7,9 @@ The creation of the AI:
   - Assumes the player will play the most optimum position 
   - Will always result in a tie or the AI winning
 2. Implemented alpha-beta pruning to improve the game's performance  
+
+
+TODO:
+- Make a GUI
+- Allow for user to select a board > 3x3 
+  - Allow the user to choose the length of alignment required to win a game
