@@ -10,6 +10,6 @@ The creation of the AI:
 
 
 TODO:
-- Make a GUI
-- Allow for user to select a board > 3x3 
-  - Allow the user to choose the length of alignment required to win a game
+-[ ] Make a GUI
+- [ ] Allow for user to select a board > 3x3 
+  - [ ] Allow the user to choose the length of alignment required to win a game
