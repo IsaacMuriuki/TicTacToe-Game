@@ -9,7 +9,7 @@ The creation of the AI:
 2. Implemented alpha-beta pruning to improve the game's performance  
 
 
-TODO:
+Future updates:
 - [ ] Make a GUI
 - [ ] Allow for user to select a board > 3x3 
   - [ ] Allow the user to choose the length of alignment required to win a game
